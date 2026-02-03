@@ -1,307 +1,355 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<title>My Wallet Tracker</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <title>My Wallet Tracker</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<style>
-:root {
-    --bg: #020617;
-    --bg2: #020617;
-    --card: rgba(2,6,23,0.85);
-    --border: rgba(148,163,184,0.12);
-    --accent: #38bdf8;
-    --accent2: #818cf8;
-    --green: #22c55e;
-    --red: #ef4444;
-    --text: #e5e7eb;
-    --muted: #94a3b8;
-}
+    <style>
+        :root {
+            --bg: #020617;
+            --bg2: #020617;
+            --card: rgba(2, 6, 23, 0.85);
+            --border: rgba(148, 163, 184, 0.12);
+            --accent: #38bdf8;
+            --accent2: #818cf8;
+            --green: #22c55e;
+            --red: #ef4444;
+            --text: #e5e7eb;
+            --muted: #94a3b8;
+        }
 
-* { box-sizing: border-box; }
+        * {
+            box-sizing: border-box;
+        }
 
-body {
-    margin: 0;
-    font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
-    background:
-        radial-gradient(1200px 600px at 10% -10%, #0f172a 0%, transparent 40%),
-        radial-gradient(800px 400px at 90% 10%, #020617 0%, transparent 40%),
-        linear-gradient(180deg, #020617, #020617);
-    color: var(--text);
-    min-height: 100vh;
-}
+        body {
+            margin: 0;
+            font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+            background:
+                radial-gradient(1200px 600px at 10% -10%, #0f172a 0%, transparent 40%),
+                radial-gradient(800px 400px at 90% 10%, #020617 0%, transparent 40%),
+                linear-gradient(180deg, #020617, #020617);
+            color: var(--text);
+            min-height: 100vh;
+        }
 
-.container {
-    max-width: 520px;
-    margin: auto;
-    padding: 16px 14px 20px;
-}
+        .container {
+            max-width: 520px;
+            margin: auto;
+            padding: 16px 14px 20px;
+        }
 
-.header {
-    text-align: center;
-    margin-bottom: 14px;
-}
+        .header {
+            text-align: center;
+            margin-bottom: 14px;
+        }
 
-.header h1 {
-    margin: 10px 0 4px;
-    font-size: 24px;
-    font-weight: 700;
-    letter-spacing: 0.2px;
-}
+        .header h1 {
+            margin: 10px 0 4px;
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: 0.2px;
+        }
 
-.rate-box {
-    font-size: 13px;
-    color: var(--muted);
-}
+        .rate-box {
+            font-size: 13px;
+            color: var(--muted);
+        }
 
-.glass {
-    background: var(--card);
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
-    border: 1px solid var(--border);
-    border-radius: 20px;
-    box-shadow:
-        0 10px 30px rgba(0,0,0,0.35),
-        inset 0 1px 0 rgba(255,255,255,0.04);
-}
+        .glass {
+            background: var(--card);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            box-shadow:
+                0 10px 30px rgba(0, 0, 0, 0.35),
+                inset 0 1px 0 rgba(255, 255, 255, 0.04);
+        }
 
-.table {
-    overflow: hidden;
-}
+        .table {
+            overflow: hidden;
+        }
 
-.row {
-    display: grid;
-    grid-template-columns: 1.3fr 1fr 1fr 40px;
-    gap: 8px;
-    padding: 12px;
-    align-items: center;
-}
+        .row {
+            display: grid;
+            grid-template-columns: 1.3fr 1fr 1fr 40px;
+            gap: 8px;
+            padding: 12px;
+            align-items: center;
+        }
 
-.row.header {
-    font-size: 12px;
-    color: var(--muted);
-    padding-top: 14px;
-    padding-bottom: 10px;
-}
+        .row.header {
+            font-size: 12px;
+            color: var(--muted);
+            padding-top: 14px;
+            padding-bottom: 10px;
+        }
 
-.row:not(.header) {
-    border-top: 1px solid var(--border);
-}
+        .row:not(.header) {
+            border-top: 1px solid var(--border);
+        }
 
-input {
-    width: 100%;
-    background: rgba(2,6,23,0.8);
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    padding: 11px 12px;
-    font-size: 15px;
-    color: var(--text);
-    text-align: center;
-    transition: border .2s, box-shadow .2s, transform .05s;
-}
+        input {
+            width: 100%;
+            background: rgba(2, 6, 23, 0.8);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 11px 12px;
+            font-size: 15px;
+            color: var(--text);
+            text-align: center;
+            transition: border .2s, box-shadow .2s, transform .05s;
+        }
 
-input::placeholder {
-    color: #64748b;
-}
+        input::placeholder {
+            color: #64748b;
+        }
 
-input:focus {
-    outline: none;
-    border-color: var(--accent);
-    box-shadow: 0 0 0 2px rgba(56,189,248,0.15);
-}
+        input:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.15);
+        }
 
-.name-input {
-    text-align: left;
-}
+        .name-input {
+            text-align: left;
+        }
 
-.delete-btn {
-    width: 36px;
-    height: 36px;
-    border-radius: 12px;
-    background: rgba(239,68,68,0.1);
-    border: 1px solid rgba(239,68,68,0.35);
-    color: #f87171;
-    font-size: 16px;
-}
+        .delete-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 12px;
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.35);
+            color: #f87171;
+            font-size: 16px;
+        }
 
-.add-btn {
-    margin-top: 14px;
-    width: 100%;
-    padding: 15px;
-    border-radius: 18px;
-    border: none;
-    background: linear-gradient(135deg, var(--accent), var(--accent2));
-    color: #020617;
-    font-size: 16px;
-    font-weight: 700;
-    box-shadow: 0 10px 25px rgba(56,189,248,0.35);
-}
+        .add-btn {
+            margin-top: 14px;
+            width: 100%;
+            padding: 15px;
+            border-radius: 18px;
+            border: none;
+            background: linear-gradient(135deg, var(--accent), var(--accent2));
+            color: #020617;
+            font-size: 16px;
+            font-weight: 700;
+            box-shadow: 0 10px 25px rgba(56, 189, 248, 0.35);
+        }
 
-.totals {
-    position: sticky;
-    bottom: 12px;
-    margin-top: 14px;
-    padding: 14px;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
-}
+        .totals {
+            position: sticky;
+            bottom: 12px;
+            margin-top: 14px;
+            padding: 14px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
 
-.total-box {
-    text-align: center;
-    border-radius: 16px;
-    padding: 14px 10px;
-    background: linear-gradient(180deg, rgba(2,6,23,0.9), rgba(2,6,23,0.7));
-    border: 1px solid var(--border);
-}
+        .total-box {
+            text-align: center;
+            border-radius: 16px;
+            padding: 14px 10px;
+            background: linear-gradient(180deg, rgba(2, 6, 23, 0.9), rgba(2, 6, 23, 0.7));
+            border: 1px solid var(--border);
+        }
 
-.total-box span {
-    display: block;
-    font-size: 12px;
-    color: var(--muted);
-}
+        .total-box span {
+            display: block;
+            font-size: 12px;
+            color: var(--muted);
+        }
 
-.total-box strong {
-    font-size: 20px;
-    color: var(--green);
-    letter-spacing: 0.3px;
-}
-</style>
+        .total-box strong {
+            font-size: 20px;
+            color: var(--green);
+            letter-spacing: 0.3px;
+        }
+    </style>
 </head>
+
 <body>
 
-<div class="container">
-    <div class="header">
-        <h1>💎 My Wallet</h1>
-        <div class="rate-box" id="rateBox">Loading exchange rate...</div>
+    <div class="container">
+        <div class="header">
+            <h1>💎 My Wallet</h1>
+            <div class="rate-box" id="rateBox">Loading exchange rate...</div>
+        </div>
+
+        <div class="glass" style="padding:14px;margin-bottom:14px;">
+            <div style="display:flex;gap:10px;">
+                <input id="mfUnits" type="number" step="any" placeholder="Enter MF Units">
+                <button class="add-btn" style="margin:0;" onclick="updateMF()">
+                    Save MF
+                </button>
+            </div>
+        </div>
+
+
+        <div class="glass table">
+            <div class="row header">
+                <div>Name</div>
+                <div>USDT</div>
+                <div>INR</div>
+                <div></div>
+            </div>
+            <div id="tableBody"></div>
+        </div>
+
+        <button class="add-btn" onclick="addRow()">➕ Add Balance</button>
+
+        <div class="glass totals">
+            <div class="total-box">
+                <span>Total USDT</span>
+                <strong id="totalUsdt">0</strong>
+            </div>
+            <div class="total-box">
+                <span>Total INR</span>
+                <strong id="totalInr">0</strong>
+            </div>
+        </div>
     </div>
 
-    <div class="glass table">
-        <div class="row header">
-            <div>Name</div>
-            <div>USDT</div>
-            <div>INR</div>
-            <div></div>
-        </div>
-        <div id="tableBody"></div>
-    </div>
+    <script>
+        let exchangeRate = 0;
+        let latestNav = 0;
 
-    <button class="add-btn" onclick="addRow()">➕ Add Balance</button>
+        const STORAGE_KEY = "wallet_balances_v2";
+        const MF_KEY = "mf_units";
+        const MF_API = "https://api.mfapi.in/mf/120546";
 
-    <div class="glass totals">
-        <div class="total-box">
-            <span>Total USDT</span>
-            <strong id="totalUsdt">0</strong>
-        </div>
-        <div class="total-box">
-            <span>Total INR</span>
-            <strong id="totalInr">0</strong>
-        </div>
-    </div>
-</div>
+        /* ================= LOAD RATES ================= */
+        async function loadRate() {
+            const r = await fetch(
+                "https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/usdt.json"
+            );
+            const d = await r.json();
+            exchangeRate = d.usdt.inr;
+        }
 
-<script>
-let exchangeRate = 0;
-const STORAGE_KEY = "wallet_balances_v2";
+        async function loadNav() {
+            const r = await fetch(MF_API);
+            const d = await r.json();
+            latestNav = parseFloat(d.data[0].nav);
+        }
 
-async function loadRate() {
-    try {
-        const res = await fetch("https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/usdt.json");
-        const data = await res.json();
-        exchangeRate = data.usdt.inr;
-        document.getElementById("rateBox").innerText =
-            `💱 1 USDT = ${exchangeRate.toFixed(4)} INR (loaded once)`;
-    } catch (e) {
-        document.getElementById("rateBox").innerText = "⚠ Failed to load exchange rate";
-    }
-}
+        /* ================= MF LOGIC ================= */
+        function updateMF() {
+            const units = parseFloat(document.getElementById("mfUnits").value);
+            if (!units || !latestNav) return;
 
-function saveData() {
-    const rows = [];
-    document.querySelectorAll("#tableBody .row").forEach(row => {
-        rows.push({
-            name: row.children[0].children[0].value,
-            usdt: row.children[1].children[0].value,
-            inr: row.children[2].children[0].value
-        });
-    });
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(rows));
-}
+            const inr = units * latestNav;
+            const usdt = inr / exchangeRate;
 
-function loadData() {
-    const saved = localStorage.getItem(STORAGE_KEY);
-    if (saved) {
-        JSON.parse(saved).forEach(r => addRow(r.name, r.usdt, r.inr));
-    } else {
-        addRow();
-    }
-}
+            let rows = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
 
-function addRow(name = "", usdt = "", inr = "") {
-    const tbody = document.getElementById("tableBody");
-    const row = document.createElement("div");
-    row.className = "row";
+            // remove old MF row if exists
+            rows = rows.filter(r => r.name !== "Gold MF");
 
-    row.innerHTML = `
-        <div><input class="name-input" placeholder="Wallet / Cash" value="${name}"></div>
+            rows.unshift({
+                name: "Gold MF",
+                usdt: usdt.toFixed(6),
+                inr: inr.toFixed(2)
+            });
+
+            localStorage.setItem(MF_KEY, units);
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(rows));
+
+            rebuildTable();
+        }
+
+        /* ================= WALLET ================= */
+        function saveData() {
+            const rows = [];
+            document.querySelectorAll("#tableBody .row").forEach(row => {
+                rows.push({
+                    name: row.children[0].children[0].value,
+                    usdt: row.children[1].children[0].value,
+                    inr: row.children[2].children[0].value
+                });
+            });
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(rows));
+        }
+
+        function loadData() {
+            rebuildTable();
+            const savedUnits = localStorage.getItem(MF_KEY);
+            if (savedUnits) {
+                document.getElementById("mfUnits").value = savedUnits;
+            }
+        }
+
+        function rebuildTable() {
+            document.getElementById("tableBody").innerHTML = "";
+            const rows = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+            rows.forEach(r => addRow(r.name, r.usdt, r.inr));
+        }
+
+        /* ================= TABLE ================= */
+        function addRow(name = "", usdt = "", inr = "") {
+            const tbody = document.getElementById("tableBody");
+            const row = document.createElement("div");
+            row.className = "row";
+
+            row.innerHTML = `
+        <div><input class="name-input" value="${name}"></div>
         <div><input type="number" step="any" value="${usdt}"></div>
         <div><input type="number" step="any" value="${inr}"></div>
         <div><button class="delete-btn">✖</button></div>
     `;
 
-    const nameInput = row.children[0].children[0];
-    const usdtInput = row.children[1].children[0];
-    const inrInput = row.children[2].children[0];
-    const delBtn = row.children[3].children[0];
+            const usdtInput = row.children[1].children[0];
+            const inrInput = row.children[2].children[0];
+            const delBtn = row.children[3].children[0];
 
-    usdtInput.addEventListener("input", () => {
-        if (!exchangeRate) return;
-        const v = parseFloat(usdtInput.value) || 0;
-        inrInput.value = (v * exchangeRate).toFixed(2);
-        calculateTotals();
-        saveData();
-    });
+            usdtInput.oninput = () => {
+                inrInput.value = (usdtInput.value * exchangeRate).toFixed(2);
+                calculateTotals(); saveData();
+            };
 
-    inrInput.addEventListener("input", () => {
-        if (!exchangeRate) return;
-        const v = parseFloat(inrInput.value) || 0;
-        usdtInput.value = (v / exchangeRate).toFixed(6);
-        calculateTotals();
-        saveData();
-    });
+            inrInput.oninput = () => {
+                usdtInput.value = (inrInput.value / exchangeRate).toFixed(6);
+                calculateTotals(); saveData();
+            };
 
-    nameInput.addEventListener("input", saveData);
+            delBtn.onclick = () => {
+                row.remove();
+                saveData(); calculateTotals();
+            };
 
-    delBtn.addEventListener("click", () => {
-        row.remove();
-        calculateTotals();
-        saveData();
-    });
+            tbody.appendChild(row);
+            calculateTotals();
+        }
 
-    tbody.appendChild(row);
-    calculateTotals();
-    saveData();
-}
+        /* ================= TOTALS ================= */
+        function calculateTotals() {
+            let totalUsdt = 0;
+            let totalInr = 0;
 
-function calculateTotals() {
-    let totalUsdt = 0;
-    let totalInr = 0;
+            document.querySelectorAll("#tableBody .row").forEach(row => {
+                totalUsdt += parseFloat(row.children[1].children[0].value) || 0;
+                totalInr += parseFloat(row.children[2].children[0].value) || 0;
+            });
 
-    document.querySelectorAll("#tableBody .row").forEach(row => {
-        totalUsdt += parseFloat(row.children[1].children[0].value) || 0;
-        totalInr += parseFloat(row.children[2].children[0].value) || 0;
-    });
+            document.getElementById("totalUsdt").innerText = totalUsdt.toFixed(6);
+            document.getElementById("totalInr").innerText = totalInr.toFixed(2);
+        }
 
-    document.getElementById("totalUsdt").innerText = totalUsdt.toFixed(6);
-    document.getElementById("totalInr").innerText = totalInr.toFixed(2);
-}
+        /* ================= INIT ================= */
+        (async function init() {
+            await Promise.all([loadRate(), loadNav()]);
+            document.getElementById("rateBox").innerText =
+                `NAV ₹${latestNav.toFixed(4)} | 1 USDT = ₹${exchangeRate.toFixed(2)}`;
+            loadData();
+        })();
+    </script>
 
-(async function init() {
-    await loadRate();
-    loadData();
-})();
-</script>
 
 </body>
+
 </html>
